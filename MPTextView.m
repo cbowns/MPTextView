@@ -147,14 +147,7 @@ static CGFloat const kLabelTopOffsetRetina = 0.5f;
     // Call super.
     [super setTextContainerInset:textContainerInset];
     
-    CGFloat labelLeftOffset;
-    if (AT_LEAST_IOS_7) {
-        labelLeftOffset = kLabelLeftOffsetIOS7;
-    } else {
-        labelLeftOffset= kLabelLeftOffset;
-    }
-    
-    self.placeholderLabel.frame = CGRectMake(textContainerInset.left + labelLeftOffset,
+    self.placeholderLabel.frame = CGRectMake(textContainerInset.left + kLabelLeftOffsetIOS7,
                                              textContainerInset.top,
                                              self.placeholderLabel.frame.size.width - textContainerInset.left - textContainerInset.right,
                                              self.placeholderLabel.frame.size.height - textContainerInset.top - textContainerInset.bottom);
