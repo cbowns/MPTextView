@@ -1,6 +1,14 @@
 MPTextView
 ==========
 
+## MPTextView and support for iOS 7
+
+I'm not currently shipping any applications which use MPTextView. It's completely untested on iOS 7 and later. I recommend maintaining a fork with iOS 7+ support, or evaluating an alternative project such as [SZTextView](https://github.com/glaszig/SZTextView).
+
+
+---
+
+
 A UITextView subclass with support for placeholder text (similar to UITextField)
 
 ### Notes and errata
