@@ -7,8 +7,11 @@
 
 #import "MPTextView.h"
 
+#define AT_LEAST_IOS_7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+
 // Manually-selected label offsets to align placeholder label with text entry.
 static CGFloat const kLabelLeftOffset = 8.f;
+static CGFloat const kLabelLeftOffsetIOS7 = 4.2f;
 static CGFloat const kLabelTopOffset = 0.f;
 
 // When instantiated from IB, the text view has an 8 point top offset:
@@ -64,7 +67,12 @@ static CGFloat const kLabelTopOffsetRetina = 0.5f;
                                                  name:UITextViewTextDidChangeNotification
                                                object:self];
 
-    CGFloat labelLeftOffset = kLabelLeftOffset;
+    CGFloat labelLeftOffset;
+    if (AT_LEAST_IOS_7) {
+        labelLeftOffset = kLabelLeftOffsetIOS7;
+    } else {
+        labelLeftOffset= kLabelLeftOffset;
+    }
     // Use our calculated label offset from initWith…:
     CGFloat labelTopOffset = self.topLabelOffset;
 
@@ -132,6 +140,17 @@ static CGFloat const kLabelTopOffsetRetina = 0.5f;
     [super setTextAlignment:textAlignment];
 
     self.placeholderLabel.textAlignment = textAlignment;
+}
+
+// Keep placeholder label frame in sync with the view's text container inset.
+- (void)setTextContainerInset:(UIEdgeInsets)textContainerInset {
+    // Call super.
+    [super setTextContainerInset:textContainerInset];
+    
+    self.placeholderLabel.frame = CGRectMake(textContainerInset.left + kLabelLeftOffsetIOS7,
+                                             textContainerInset.top,
+                                             self.placeholderLabel.frame.size.width - textContainerInset.left - textContainerInset.right,
+                                             self.placeholderLabel.frame.size.height - textContainerInset.top - textContainerInset.bottom);
 }
 
 // Todo: override setAttributedText to capture changes
